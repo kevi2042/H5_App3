@@ -10,6 +10,10 @@ namespace MVVMTemplate.ViewModels
     [QueryProperty(nameof(ItemId), nameof(ItemId))]
     public class ItemDetailViewModel : BaseViewModel
     {
+        /// 
+        /// Opgave 2.1 består af at tilføje Price variablen til systemet og tilføje en delete command der kan slette et item
+        /// 
+
         private string itemId;
         private string text;
         private string description;

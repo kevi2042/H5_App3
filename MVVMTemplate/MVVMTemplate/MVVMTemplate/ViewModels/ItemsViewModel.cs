@@ -10,6 +10,10 @@ namespace MVVMTemplate.ViewModels
 {
     public class ItemsViewModel : BaseViewModel
     {
+        /// 
+        /// Opgave 2.1 består af at tilføje Price variablen til systemet og tilføje en delete command der kan slette et item
+        /// 
+
         private Item _selectedItem;
 
         public ObservableCollection<Item> Items { get; }

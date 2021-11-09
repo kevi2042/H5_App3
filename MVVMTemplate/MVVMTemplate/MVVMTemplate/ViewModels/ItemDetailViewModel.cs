@@ -1,8 +1,10 @@
 ﻿using MVVMTemplate.Models;
+using MVVMTemplate.Services;
 using System;
 using System.Diagnostics;
 using System.Threading.Tasks;
 using System.Windows.Input;
+using TinyIoC;
 using Xamarin.Forms;
 
 namespace MVVMTemplate.ViewModels
@@ -10,6 +12,14 @@ namespace MVVMTemplate.ViewModels
     [QueryProperty(nameof(ItemId), nameof(ItemId))]
     public class ItemDetailViewModel : BaseViewModel
     {
+        private readonly IDataStore<Item> _dataStore;
+        public ItemDetailViewModel()
+        {
+            // dependency injection ved brug af TinyIoC, skal være det første i en constructor
+            _dataStore = TinyIoCContainer.Current.Resolve<IDataStore<Item>>();
+        }
+
+
         private string itemId;
         private string text;
         private string description;
@@ -51,7 +61,7 @@ namespace MVVMTemplate.ViewModels
         {
             try
             {
-                var item = await DataStore.GetItemAsync(itemId);
+                var item = await _dataStore.GetItemAsync(itemId);
                 Id = item.Id;
                 Text = item.Text;
                 Description = item.Description;
@@ -95,7 +105,7 @@ namespace MVVMTemplate.ViewModels
                 {
                     if (args)
                     {
-                        await DataStore.DeleteItemAsync(ItemId);
+                        await _dataStore.DeleteItemAsync(ItemId);
                         await Shell.Current.GoToAsync("..");
                     }
                 });

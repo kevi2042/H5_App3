@@ -1,7 +1,10 @@
-﻿using MVVMTemplate.ViewModels;
+﻿using MVVMTemplate.Models;
+using MVVMTemplate.Services;
+using MVVMTemplate.ViewModels;
 using MVVMTemplate.Views;
 using System;
 using System.Collections.Generic;
+using TinyIoC;
 using Xamarin.Forms;
 
 namespace MVVMTemplate
@@ -14,10 +17,17 @@ namespace MVVMTemplate
             Routing.RegisterRoute(nameof(ItemDetailPage), typeof(ItemDetailPage));
             Routing.RegisterRoute(nameof(NewItemPage), typeof(NewItemPage));
 
-            // for at der dukker en pop up bliver denne subscribe nød til at ligge i main delen af appen.
-            // i dette tilfælde er det her i AppShell
-            // Typen af subscribe er den sender der bliver send fra.
-            MessagingCenter.Subscribe<ItemDetailViewModel>(new ItemDetailViewModel(),
+            // dependency injection ved brug af TinyIoC
+            // Tilføj både interface og service for at defaulte til singleton.
+            // Bruges kun en type med register er default transient, i dette tilfælde, tilføj yderligt AsSingleton bagved
+            var container = TinyIoCContainer.Current;
+            container.Register<IDataStore<Item>,MockDataStore>().AsSingleton();
+           
+
+        // for at der dukker en pop up bliver denne subscribe nød til at ligge i main delen af appen.
+        // i dette tilfælde er det her i AppShell
+        // Typen af subscribe er den sender der bliver send fra.
+        MessagingCenter.Subscribe<ItemDetailViewModel>(new ItemDetailViewModel(),
                 "DeleteItem", async (sender) =>
                 {
                     var answer = await DisplayAlert("Delete Item", $"The item will be deleted", "OK", "Cancel");

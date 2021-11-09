@@ -1,8 +1,10 @@
 ﻿using MVVMTemplate.Models;
+using MVVMTemplate.Services;
 using System;
 using System.Collections.Generic;
 using System.Text;
 using System.Windows.Input;
+using TinyIoC;
 using Xamarin.Forms;
 
 namespace MVVMTemplate.ViewModels
@@ -13,12 +15,15 @@ namespace MVVMTemplate.ViewModels
         private string description;
         private decimal price;
 
+        private readonly IDataStore<Item> _dataStore;
+
         public NewItemViewModel()
         {
             SaveCommand = new Command(OnSave, ValidateSave);
             CancelCommand = new Command(OnCancel);
             this.PropertyChanged +=
                 (_, __) => SaveCommand.ChangeCanExecute();
+            _dataStore = TinyIoCContainer.Current.Resolve<IDataStore<Item>>();
         }
 
         private bool ValidateSave()
@@ -66,7 +71,7 @@ namespace MVVMTemplate.ViewModels
 
             MessagingCenter.Send(this, "NewItem");
 
-            await DataStore.AddItemAsync(newItem);
+            await _dataStore.AddItemAsync(newItem);
 
             // This will pop the current page off the navigation stack
             await Shell.Current.GoToAsync("..");

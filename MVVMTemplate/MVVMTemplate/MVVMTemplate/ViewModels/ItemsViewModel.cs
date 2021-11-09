@@ -1,15 +1,19 @@
 ﻿using MVVMTemplate.Models;
+using MVVMTemplate.Services;
 using MVVMTemplate.Views;
 using System;
 using System.Collections.ObjectModel;
 using System.Diagnostics;
 using System.Threading.Tasks;
+using TinyIoC;
 using Xamarin.Forms;
 
 namespace MVVMTemplate.ViewModels
 {
     public class ItemsViewModel : BaseViewModel
     {
+        private readonly IDataStore<Item> _dataStore;
+
         private Item _selectedItem;
 
         public ObservableCollection<Item> Items { get; }
@@ -19,12 +23,12 @@ namespace MVVMTemplate.ViewModels
 
         public ItemsViewModel()
         {
+            // dependency injection ved brug af TinyIoC, skal være det første i en constructor
+            _dataStore = TinyIoCContainer.Current.Resolve<IDataStore<Item>>();
             Title = "Browse";
             Items = new ObservableCollection<Item>();
             LoadItemsCommand = new Command(async () => await ExecuteLoadItemsCommand());
-
             ItemTapped = new Command<Item>(OnItemSelected);
-
             AddItemCommand = new Command(OnAddItem);
         }
 
@@ -35,7 +39,7 @@ namespace MVVMTemplate.ViewModels
             try
             {
                 Items.Clear();
-                var items = await DataStore.GetItemsAsync(true);
+                var items = await _dataStore.GetItemsAsync(true);
                 foreach (var item in items)
                 {
                     Items.Add(item);

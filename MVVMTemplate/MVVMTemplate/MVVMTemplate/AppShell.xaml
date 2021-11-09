@@ -11,6 +11,12 @@
         https://docs.microsoft.com/xamarin/xamarin-forms/app-fundamentals/shell/
     -->
 
+    <!--
+    
+        Opgave 3.1 Består af at der skal tilføjes flyout eller tabs menuer for at få øvelse i at bruge shell
+    
+    -->
+    
     <Shell.Resources>
         <ResourceDictionary>
             <Style x:Key="BaseStyle" TargetType="Element">
@@ -29,18 +35,55 @@
         </ResourceDictionary>
     </Shell.Resources>
 
-    <TabBar>
+    
+    <!--#region Flyout-->
+    <!--<FlyoutItem Title="About" Icon="icon_about.png">
+        <local:AboutPage Title="About" IconImageSource="icon_about.png"/>
+    </FlyoutItem>
+    <FlyoutItem Title="Browse" Icon="icon_feed.png">
+        <local:ItemsPage Title="Browse" IconImageSource="icon_feed.png"/>
+    </FlyoutItem>-->
+
+
+    <!--<FlyoutItem Title="About & Browse" Icon="icon_about.png">
+        <local:AboutPage Title="About" IconImageSource="icon_about.png"/>
+        <local:ItemsPage Title="Browse" IconImageSource="icon_feed.png"/>
+    </FlyoutItem>-->
+
+    <!--<FlyoutItem>
+        <Tab Title="Browse" Icon="icon_feed.png">
+            <local:AboutPage Title="About" IconImageSource="icon_about.png"/>
+            <local:ItemsPage Title="Browse" IconImageSource="icon_feed.png"/>
+        </Tab>
+        <local:NewItemPage Title="Add Item" />
+    </FlyoutItem>-->
+    <!--#endregion-->
+    
+    
+    <!--#region Routing-->
+    <FlyoutItem Title="Root" FlyoutDisplayOptions="AsMultipleItems" Icon="info.png" Route="root">
+        <Tab Title="Items" Icon="paw.png" Route="Items">
+            <ShellContent Title="Items" Route="ItemsPage" ContentTemplate="{DataTemplate local:ItemsPage}"/>
+            <ShellContent Title="New Item" Route="NewItemPage" Icon="dog.png" ContentTemplate="{DataTemplate local:NewItemPage}" />
+        </Tab>
+        
+    </FlyoutItem>
+    <!--#endregion-->
+    
+    
+    
+    <!--<TabBar>
         <ShellContent Title="About" Icon="icon_about.png" Route="AboutPage" ContentTemplate="{DataTemplate local:AboutPage}" />
         <ShellContent Title="Browse" Icon="icon_feed.png" ContentTemplate="{DataTemplate local:ItemsPage}" />
-    </TabBar>
+    </TabBar>-->
 
     <!--
         If you would like to navigate to this content you can do so by calling
         await Shell.Current.GoToAsync("//LoginPage");
     -->
-    <TabBar>
+    <!--<TabBar>
         <ShellContent Route="LoginPage" ContentTemplate="{DataTemplate local:LoginPage}" />
-    </TabBar>
+    </TabBar>-->
 
 
 </Shell>

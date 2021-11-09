@@ -64,6 +64,8 @@ namespace MVVMTemplate.ViewModels
                 Price = Price
             };
 
+            MessagingCenter.Send(this, "NewItem");
+
             await DataStore.AddItemAsync(newItem);
 
             // This will pop the current page off the navigation stack

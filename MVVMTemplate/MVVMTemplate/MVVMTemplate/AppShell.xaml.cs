@@ -23,6 +23,12 @@ namespace MVVMTemplate
                     var answer = await DisplayAlert("Delete Item", $"The item will be deleted", "OK", "Cancel");
                     MessagingCenter.Send(this, "ConfirmDelete", answer);
                 });
+
+            MessagingCenter.Subscribe<NewItemViewModel>(new NewItemViewModel(),
+                "NewItem", (sender) =>
+                {
+                    DisplayAlert("New Item", $"A New Item has been Created", "OK");
+                });
         }
 
     }

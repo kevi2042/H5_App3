@@ -96,6 +96,7 @@ namespace MVVMTemplate.ViewModels
                     if (args)
                     {
                         await DataStore.DeleteItemAsync(ItemId);
+                        await Shell.Current.GoToAsync("..");
                     }
                 });
         }

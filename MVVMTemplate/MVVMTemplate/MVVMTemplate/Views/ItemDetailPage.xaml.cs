@@ -10,6 +10,7 @@ namespace MVVMTemplate.Views
         {
             InitializeComponent();
             BindingContext = new ItemDetailViewModel();
+
         }
     }
 }

@@ -63,6 +63,8 @@ namespace MVVMTemplate.ViewModels
             }
         }
 
+
+
         private Command deleteItemCommand;
 
         public ICommand DeleteItemCommand
@@ -78,9 +80,24 @@ namespace MVVMTemplate.ViewModels
             }
         }
 
-        private async void DeleteItem()
+        private void DeleteItem()
         {
-            await DataStore.DeleteItemAsync(ItemId);
+            // Messaging send, fungere som mqtt subscribe og sending
+            // Beskeden sendes til Adressen "DeleteItem", sådan at alle der subscriber til "DeleteItem" får besked
+            // Modtageren af denne besked ligger i AppShell cs filen
+            MessagingCenter.Send(this, "DeleteItem");
+
+
+            // Subsribe fungere ved at typen er den fil beskeden bliver sendt fra, i dette tilfælde er det fra appshell til her
+            // der bliver modtaget en bool, og addressen der subscribes til er "ConfirmDelete"
+            MessagingCenter.Subscribe<AppShell, bool>(new AppShell(),
+                "ConfirmDelete", async (sender, args) =>
+                {
+                    if (args)
+                    {
+                        await DataStore.DeleteItemAsync(ItemId);
+                    }
+                });
         }
     }
 }

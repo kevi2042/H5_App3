@@ -10,12 +10,6 @@
     
         https://docs.microsoft.com/xamarin/xamarin-forms/app-fundamentals/shell/
     -->
-
-    <!--
-    
-        Opgave 3.1 Består af at der skal tilføjes flyout eller tabs menuer for at få øvelse i at bruge shell
-    
-    -->
     
     <Shell.Resources>
         <ResourceDictionary>

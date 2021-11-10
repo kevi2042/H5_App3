@@ -26,6 +26,8 @@ namespace MVVMTemplate.ViewModels
             ItemTapped = new Command<Item>(OnItemSelected);
 
             AddItemCommand = new Command(OnAddItem);
+
+
         }
 
         async Task ExecuteLoadItemsCommand()

@@ -1,4 +1,5 @@
 ﻿using MVVMTemplate.Models;
+using MVVMTemplate.Views;
 using System;
 using System.Diagnostics;
 using System.Threading.Tasks;
@@ -90,7 +91,7 @@ namespace MVVMTemplate.ViewModels
 
             // Subsribe fungere ved at typen er den fil beskeden bliver sendt fra, i dette tilfælde er det fra appshell til her
             // der bliver modtaget en bool, og addressen der subscribes til er "ConfirmDelete"
-            MessagingCenter.Subscribe<AppShell, bool>(new AppShell(),
+            MessagingCenter.Subscribe<ItemsPage, bool>(new ItemsPage(),
                 "ConfirmDelete", async (sender, args) =>
                 {
                     if (args)

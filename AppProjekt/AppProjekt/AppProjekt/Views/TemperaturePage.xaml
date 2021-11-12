@@ -1,0 +1,32 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:viewmodel="clr-namespace:AppProjekt.ViewModels"
+             xmlns:charts="clr-namespace:Microcharts.Forms;assembly=Microcharts.Forms"
+             x:Class="AppProjekt.Views.TemperaturePage">
+
+
+
+    <StackLayout>
+        <RefreshView x:DataType="viewmodel:TemperatureViewModel" Command="{Binding GetAllMeasurements}" IsRefreshing="{Binding IsBusy, Mode=TwoWay}">
+
+            <StackLayout>
+                <Frame BackgroundColor="LightSalmon">
+                    <StackLayout>
+                        <Label>Temperature &#176; C</Label>
+                        <charts:ChartView x:Name="tempchart" HeightRequest="300" Chart="{Binding TemperatureChart}" />
+                    </StackLayout>
+                </Frame>
+
+                <StackLayout>
+                    <Button Text="10" Command="{Binding UpdateChart}" CommandParameter="50" />
+                    <Button Text="20"  Command="{Binding UpdateChart}" CommandParameter="25"/>
+                    <Button Text="25"  Command="{Binding UpdateChart}" CommandParameter="20"/>
+                </StackLayout>
+            </StackLayout>
+
+        </RefreshView>
+    </StackLayout>
+
+
+</ContentPage>
